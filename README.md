@@ -1,66 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Kelly Course Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based **online learning platform** where users can browse courses, watch embedded YouTube videos, complete quizzes, and earn downloadable certificates upon passing.
 
-## About Laravel
+## About the Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Kelly Course Project is a web application built with [Laravel](https://laravel.com) that provides:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Course management** — Create and manage courses with title, instructor, description, cover image, YouTube video links, and downloadable materials.
+- **YouTube integration** — Embed YouTube videos in courses; video titles can be fetched via the YouTube Data API.
+- **Quizzes** — Add multiple-choice (or similar) questions to courses. Learners take quizzes and their responses are recorded.
+- **Certificates** — Users who pass a course quiz receive a certificate. Certificates can be viewed and downloaded as PDFs.
+- **User roles** — Admin and regular user roles (e.g. for managing courses and viewing the user list).
+- **Authentication** — Registration, login, profile, and password management via Laravel Breeze.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The app uses **Laravel 12**, **Laravel Breeze** (Blade + Tailwind), **Vite**, and optional **SQLite** for development. PDF certificates are generated with **DomPDF** and **Intervention Image**.
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Feature | Description |
+|--------|-------------|
+| **Courses** | CRUD for courses with image, instructor, description, YouTube links, titles, and materials (files/links). |
+| **Quizzes** | Add questions to courses; learners take a quiz (random selection) and submit answers. |
+| **Quiz responses** | View quiz attempts and scores per course. |
+| **Certificates** | Issue certificates for completed courses; view and download as PDF. |
+| **Users** | List users (e.g. for admins); view a user’s certificates. |
+| **Profile** | Edit profile and account settings (Breeze). |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Tech Stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend:** PHP 8.2+, Laravel 12  
+- **Frontend:** Blade, Tailwind CSS, Vite  
+- **Auth:** Laravel Breeze  
+- **Database:** SQLite (default), configurable to MySQL/PostgreSQL  
+- **PDF:** barryvdh/laravel-dompdf, mpdf, Intervention Image  
+- **YouTube:** Optional YouTube Data API for video titles  
 
-## Laravel Sponsors
+## Requirements
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP 8.2+
+- Composer
+- Node.js & npm (for frontend assets)
+- (Optional) YouTube Data API key for auto-fetching video titles
 
-### Premium Partners
+## Installation
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Kelly-Course-Project
+   ```
 
-## Contributing
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Environment and key**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Code of Conduct
+4. **Database**
+   - Use SQLite (default in `.env`): ensure `database/database.sqlite` exists, or create it.
+   - Or set `DB_CONNECTION`, `DB_DATABASE`, etc. for MySQL/PostgreSQL in `.env`.
+   ```bash
+   php artisan migrate
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Optional: YouTube API**
+   - Add to `.env`: `YOUTUBE_API_KEY=your-api-key`  
+   - Only needed if you use the YouTube service to fetch video titles.
 
-## Security Vulnerabilities
+6. **Frontend**
+   ```bash
+   npm install
+   npm run build
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. **Run the app**
+   ```bash
+   php artisan serve
+   ```
+   Then open `http://localhost:8000` in your browser.
+
+For development with hot reload and queue:
+```bash
+composer run dev
+```
+
+## Project Structure (high level)
+
+- **`app/Http/Controllers/`** — `CourseController`, `QuizController`, `QuestionController`, `CertificateController`, `UserController`, `ProfileController`, plus Breeze auth controllers.
+- **`app/Models/`** — `User`, `Course`, `Question`, `Certificate`.
+- **`app/Services/YouTubeService.php`** — Fetches YouTube video titles via the API.
+- **`routes/web.php`** — Web routes for home, dashboard, courses, quizzes, certificates, users.
+- **`database/migrations/`** — Tables for users, courses, questions, quiz responses, certificates.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced under the [MIT license](https://opensource.org/licenses/MIT).
